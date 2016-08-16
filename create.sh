@@ -196,7 +196,7 @@ if [[ -n $bridge ]]; then
       user_data=$(mktemp)
       cat >$user_data <<EOF
 #!/bin/bash
-cat >/etc/network/interfaces <<EOF
+cat >/etc/network/interfaces <<EOFF
 auto lo
 iface lo inet loopback
 
