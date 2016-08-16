@@ -17,7 +17,7 @@ function help {
   echo "  create.sh --name --os [ --cpus --ram --disk --bridge --ip --gateway --ip6 --ip6_gateway --dns]"
   echo ""
   echo " --name: Name of the VM. Required."
-  echo " --os: OS of the VM. Required."
+  echo " --os: OS of the VM (.img file without .img). Required."
   echo " --cpus: No. of CPUs. Default of 2."
   echo " --ram: Amount of RAM. Default of 512."
   echo " --disk: Size of disk. Default of 20G."
@@ -196,7 +196,7 @@ if [[ -n $bridge ]]; then
       user_data=$(mktemp)
       cat >$user_data <<EOF
 #!/bin/bash
-cat >/etc/network/interfaces <<EOFF
+cat >/etc/network/interfaces <<EOF
 auto lo
 iface lo inet loopback
 
