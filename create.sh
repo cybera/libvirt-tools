@@ -187,6 +187,12 @@ fi
 
 extra_config_drive_options=""
 user_data=""
+
+iface="eth0"
+if [[ $os =~ "1604" ]]; then
+  iface="ens3"
+fi
+
 network_config="--network model=virtio,network=default"
 if [[ -n $bridge ]]; then
   network_config="--network model=virtio,bridge=$bridge"
@@ -200,21 +206,21 @@ cat >/etc/network/interfaces <<EOFF
 auto lo
 iface lo inet loopback
 
-auto eth0
-iface eth0 inet static
+auto $iface
+iface $iface inet static
     address $ip
     netmask 255.255.255.0
     gateway $gateway
     dns-nameservers $dns
 
-iface eth0 inet6 static
+iface $iface inet6 static
     address $ip6
     gateway $ip6_gateway
     netmask 64
 EOFF
-ifdown eth0
+ifdown $iface
 sleep 2
-ifup eth0
+ifup $iface
 EOF
       extra_config_drive_options="--user-data $user_data"
     fi
